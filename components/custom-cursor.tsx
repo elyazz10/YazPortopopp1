@@ -11,18 +11,20 @@ export function CustomCursor() {
   const playSound = useSoundEffect()
 
   useEffect(() => {
-    // Hanya tampilkan kustom kursor di desktop, di HP/Touchscreen disembunyikan
-    if (window.matchMedia("(pointer: coarse)").matches) return
-
-    setIsVisible(true)
+    const isDesktop = window.matchMedia("(pointer: fine)").matches
+    if (isDesktop) {
+      setIsVisible(true)
+    }
 
     const updateMousePosition = (e: MouseEvent) => {
+      if (!isDesktop) return
       setMousePosition({ x: e.clientX, y: e.clientY })
     }
 
     let lastHoverState = false
 
-    const handleMouseOver = (e: MouseEvent) => {
+    const handleMouseOver = (e: MouseEvent | TouchEvent) => {
+      if (!isDesktop) return // No hover sounds on mobile
       const target = e.target as HTMLElement
       const isClickable = 
         window.getComputedStyle(target).cursor === "pointer" ||
@@ -33,14 +35,13 @@ export function CustomCursor() {
 
       setIsHovering(isClickable)
       
-      // Play hover sound only when transitioning to a clickable element
       if (isClickable && !lastHoverState) {
         playSound("hover")
       }
       lastHoverState = isClickable
     }
 
-    const handleMouseDown = (e: MouseEvent) => {
+    const handleInteract = (e: Event) => {
       const target = e.target as HTMLElement
       const isClickable = 
         window.getComputedStyle(target).cursor === "pointer" ||
@@ -55,17 +56,29 @@ export function CustomCursor() {
     }
 
     window.addEventListener("mousemove", updateMousePosition)
-    window.addEventListener("mouseover", handleMouseOver)
-    window.addEventListener("mousedown", handleMouseDown)
+    window.addEventListener("mouseover", handleMouseOver as EventListener)
+    window.addEventListener("mousedown", handleInteract)
+    window.addEventListener("touchstart", handleInteract, { passive: true })
 
     return () => {
       window.removeEventListener("mousemove", updateMousePosition)
-      window.removeEventListener("mouseover", handleMouseOver)
-      window.removeEventListener("mousedown", handleMouseDown)
+      window.removeEventListener("mouseover", handleMouseOver as EventListener)
+      window.removeEventListener("mousedown", handleInteract)
+      window.removeEventListener("touchstart", handleInteract)
     }
   }, [playSound])
 
-  if (!isVisible) return null
+  if (!isVisible) {
+    return (
+      <style dangerouslySetInnerHTML={{__html: `
+        @media (pointer: fine) {
+          body, a, button, input, textarea {
+            cursor: none !important;
+          }
+        }
+      `}} />
+    )
+  }
 
   return (
     <>

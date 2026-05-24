@@ -270,7 +270,7 @@ function HeroSection() {
           {lang === "EN" ? "OPEN TO WORK" : "SIAP BEKERJA"}
         </div>
         <div className="flex items-center md:justify-center border-b-[3px] md:border-b-0 md:border-r-[3px] border-[var(--border-color)] px-6 py-3 md:py-0 h-full flex-1">
-          {lang === "EN" ? "BASED IN JAMBI, ID" : "BERBASIS DI JAMBI, ID"}
+          {lang === "EN" ? "BASED IN TANGERANG, ID" : "BERBASIS DI TANGERANG, ID"}
         </div>
         <div className="flex items-center md:justify-center border-b-[3px] md:border-b-0 md:border-r-[3px] border-[var(--border-color)] px-6 py-3 md:py-0 h-full flex-1">
           <span suppressHydrationWarning>{time ? time.replace("TODAY", lang === "EN" ? "TODAY" : "HARI INI") : "LOADING..."}</span>
