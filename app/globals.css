@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+
+  --font-mono: var(--font-space-mono);
+  --font-heading: var(--font-bebas-neue);
+}
+
+@layer base {
+  :root {
+    --background: #fafafa;
+    --foreground: #0a0a0a;
+    --primary: #f4f4f5;
+    --primary-foreground: #0a0a0a;
+    --muted: #e5e5e5;
+    --border-color: #0a0a0a;
+    /* Grid lebih kelihatan di light mode */
+    --grid-color: rgba(0, 0, 0, 0.2);
+    --nav-bg: rgba(250, 250, 250, 0.97);
+    --nav-gradient: linear-gradient(180deg, #fafafa 0%, rgba(250,250,250,0.92) 100%);
+  }
+
+  .dark {
+    --background: #0c0c0c;
+    --foreground: #f5f5f5;
+    --primary: #1a1a1a;
+    --primary-foreground: #f5f5f5;
+    --muted: #2a2a2a;
+    --border-color: #f5f5f5;
+    /* Grid lebih kelihatan di dark mode */
+    --grid-color: rgba(255, 255, 255, 0.18);
+    --nav-bg: rgba(12, 12, 12, 0.97);
+    --nav-gradient: linear-gradient(180deg, #0c0c0c 0%, rgba(12,12,12,0.92) 100%);
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ─── Cards ───────────────────────────────── */
+.neo-brutal {
+  border: 2px solid var(--border-color);
+  background: var(--background);
+  border-radius: 24px;
+}
+
+/* ─── Pill tags ──────────────────────────── */
+.neo-pill {
+  border: 2px solid var(--border-color);
+  background: var(--background);
+  color: var(--foreground);
+  border-radius: 9999px;
+  padding: 6px 18px;
+  font-weight: bold;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Primary button ─────────────────────── */
+.neo-brutal-btn {
+  border: 2px solid var(--border-color);
+  background: var(--foreground);
+  color: var(--background);
+  border-radius: 9999px;
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.neo-brutal-btn:hover {
+  opacity: 0.85;
+  transform: scale(1.05);
+}
+
+/* ─── Grid background ────────────────────── */
+.bg-dot-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+}
+
+/* ─── Navbar ─────────────────────────────── */
+/* Pakai gradient supaya ada "depth" dan beda dari konten */
+.nav-bar {
+  background: var(--nav-gradient);
+  border-bottom: 2px solid var(--border-color);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ─── Theme toggle button ────────────────── */
+.theme-toggle-btn {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--border-color);
+  border-radius: 9999px;
+  background: var(--foreground);
+  color: var(--background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+.theme-toggle-btn:hover {
+  opacity: 0.7;
+  transform: rotate(15deg);
+}
+
+/* ─── Text outline effect ────────────────── */
+.text-stroke {
+  -webkit-text-stroke: 2px var(--foreground);
+  color: transparent;
+}
+
+/* For loading screen (dark bg, light stroke) */
+.text-stroke-light {
+  -webkit-text-stroke: 2px #fafafa;
+  color: transparent;
+}
+
+/* ─── Scrollbar ──────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 99px;
+  opacity: 0.5;
+}
